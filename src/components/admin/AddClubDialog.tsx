@@ -76,7 +76,7 @@ export function AddClubDialog({ children, onAddClub }: AddClubDialogProps) {
       try {
         // Create organizer account in Supabase
         const response = await fetch(
-          `https://${projectId}.supabase.co/functions/v1/make-server-94da7951/make-server-94da7951/auth/create-organizer`,
+          `https://${projectId}.supabase.co/functions/v1/make-server-94da7951/auth/create-organizer`,
           {
             method: 'POST',
             headers: {
@@ -118,7 +118,7 @@ export function AddClubDialog({ children, onAddClub }: AddClubDialogProps) {
         
         // Also save to Supabase KV store
         fetch(
-          `https://${projectId}.supabase.co/functions/v1/make-server-94da7951/make-server-94da7951/data/organizers`,
+          `https://${projectId}.supabase.co/functions/v1/make-server-94da7951/data/organizers`,
           {
             method: 'POST',
             headers: {

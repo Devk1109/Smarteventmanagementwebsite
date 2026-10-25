@@ -1,7 +1,7 @@
 // Feedback storage utilities using Supabase backend
 import { projectId, publicAnonKey } from './supabase/info';
 
-const API_BASE_URL = `https://${projectId}.supabase.co/functions/v1/make-server-94da7951`;
+const API_BASE_URL = `https://${projectId}.supabase.co/functions/v1`;
 
 export interface FeedbackQuestion {
   text: string;

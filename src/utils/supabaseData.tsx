@@ -1,6 +1,6 @@
 import { projectId, publicAnonKey } from './supabase/info';
 
-const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-94da7951/make-server-94da7951/data`;
+const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-94da7951/data`;
 
 // Helper function to make API calls
 async function apiCall(endpoint: string, options: RequestInit = {}) {

@@ -154,7 +154,7 @@ supabase link --project-ref oecogsvqzjliycaxekwx
 supabase functions deploy make-server-94da7951
 ```
 
-The deployable function lives in `supabase/functions/make-server-94da7951`. After deployment, send a GET request with the project's anon key in the `Authorization: Bearer <anon-key>` header to `https://oecogsvqzjliycaxekwx.supabase.co/functions/v1/make-server-94da7951/make-server-94da7951/health`; it should return `{"status":"ok"}`. Supabase Edge Function routing requires the function name both as the gateway function segment and as the route prefix inside the function. Vercel deploys only the Vite frontend, so deploy the Supabase function separately after changes to it. Configure required secrets in Supabase Edge Function settings; never add the service-role key to Vercel's client-side `VITE_*` variables.
+The deployable function lives in `supabase/functions/make-server-94da7951`. After deployment, send a GET request with the project's anon key in the `Authorization: Bearer <anon-key>` header to `https://oecogsvqzjliycaxekwx.supabase.co/functions/v1/make-server-94da7951/health`; it should return `{"status":"ok"}`. The function name is included once in the public URL and matches the Hono route prefix. Vercel deploys only the Vite frontend, so deploy the Supabase function separately after changes to it. Configure required secrets in Supabase Edge Function settings; never add the service-role key to Vercel's client-side `VITE_*` variables.
 
 ### Google OAuth and Calendar
 

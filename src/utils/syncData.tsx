@@ -10,7 +10,7 @@ import { projectId, publicAnonKey } from './supabase/info';
 async function syncOrganizersFromSupabase(): Promise<void> {
   try {
     const response = await fetch(
-      `https://${projectId}.supabase.co/functions/v1/make-server-94da7951/make-server-94da7951/data/organizers`,
+      `https://${projectId}.supabase.co/functions/v1/make-server-94da7951/data/organizers`,
       {
         headers: {
           'Authorization': `Bearer ${publicAnonKey}`,
