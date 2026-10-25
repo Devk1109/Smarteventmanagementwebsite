@@ -10,7 +10,7 @@ import { projectId, publicAnonKey } from './supabase/info';
 async function syncOrganizersFromSupabase(): Promise<void> {
   try {
     const response = await fetch(
-      `https://${projectId}.supabase.co/functions/v1/make-server-94da7951/data/organizers`,
+      `https://${projectId}.supabase.co/functions/v1/make-server-94da7951/make-server-94da7951/data/organizers`,
       {
         headers: {
           'Authorization': `Bearer ${publicAnonKey}`,
@@ -18,10 +18,15 @@ async function syncOrganizersFromSupabase(): Promise<void> {
       }
     );
     
-    if (response.ok) {
-      const data = await response.json();
-      localStorage.setItem('clubhub-organizers', JSON.stringify(data.organizers || []));
+    const responseText = await response.text();
+    let data: { organizers?: unknown[]; error?: string };
+    try {
+      data = responseText ? JSON.parse(responseText) : {};
+    } catch {
+      throw new Error(`Supabase organizers API returned non-JSON (${response.status})`);
     }
+    if (!response.ok) throw new Error(data.error || `Supabase organizers API failed (${response.status})`);
+    localStorage.setItem('clubhub-organizers', JSON.stringify(data.organizers || []));
   } catch (error) {
     console.error('Error syncing organizers from Supabase:', error);
   }

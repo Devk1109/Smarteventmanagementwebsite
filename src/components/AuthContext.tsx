@@ -240,7 +240,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       // Create account via our Supabase server (auto-confirms email)
       const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-94da7951/auth/signup`,
+        `https://${projectId}.supabase.co/functions/v1/make-server-94da7951/make-server-94da7951/auth/signup`,
         {
           method: 'POST',
           headers: {

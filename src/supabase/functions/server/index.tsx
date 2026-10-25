@@ -24,6 +24,7 @@ app.use(
 );
 
 // Health check endpoint
+// Supabase Edge Function routes must include the function name in the path.
 app.get("/make-server-94da7951/health", (c) => {
   return c.json({ status: "ok" });
 });

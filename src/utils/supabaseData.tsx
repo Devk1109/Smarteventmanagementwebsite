@@ -1,6 +1,6 @@
 import { projectId, publicAnonKey } from './supabase/info';
 
-const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-94da7951/data`;
+const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-94da7951/make-server-94da7951/data`;
 
 // Helper function to make API calls
 async function apiCall(endpoint: string, options: RequestInit = {}) {
@@ -13,12 +13,22 @@ async function apiCall(endpoint: string, options: RequestInit = {}) {
     },
   });
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'API call failed');
+  const responseText = await response.text();
+  let data: any;
+  try {
+    data = responseText ? JSON.parse(responseText) : {};
+  } catch {
+    const detail = responseText.trim().slice(0, 240);
+    throw new Error(
+      `Supabase API returned non-JSON (${response.status} ${response.statusText})${detail ? `: ${detail}` : ''}`,
+    );
   }
 
-  return response.json();
+  if (!response.ok) {
+    throw new Error(data?.error || `Supabase API request failed (${response.status})`);
+  }
+
+  return data;
 }
 
 // Events API

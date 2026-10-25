@@ -137,7 +137,7 @@ Clearing the browser's site data removes this local cache and local demo state. 
 
 ### Supabase
 
-`src/utils/supabase/info.tsx` contains the Supabase project ID and public anonymous key used by the browser client and API helpers. The frontend calls a Supabase Edge Function under the `make-server-94da7951` path. Its Hono server is in `src/supabase/functions/server` and exposes:
+`src/utils/supabase/info.tsx` contains the Supabase project ID and public anonymous key used by the browser client and API helpers. The frontend calls a Supabase Edge Function under the `make-server-94da7951` path. Its deployable Hono server is in `supabase/functions/make-server-94da7951` and exposes:
 
 - `/health` for a simple health response
 - `/auth/signup` and `/auth/create-organizer` for user creation
@@ -145,6 +145,16 @@ Clearing the browser's site data removes this local cache and local demo state. 
 - `/feedback/forms` and `/feedback/responses` routes for feedback forms and submissions
 
 The server uses Supabase Auth and a key-value store helper. Deploying these routes requires the Supabase project and its server-side environment secrets, including the service-role key, to be configured in the Edge Function environment. The service-role key must never be put in client code. The anonymous key is intended for public client access; access policy and server-side validation still need to protect sensitive operations.
+
+To deploy the Edge Function, install and authenticate the Supabase CLI, then run these commands from the repository root:
+
+```bash
+supabase login
+supabase link --project-ref oecogsvqzjliycaxekwx
+supabase functions deploy make-server-94da7951
+```
+
+The deployable function lives in `supabase/functions/make-server-94da7951`. After deployment, send a GET request with the project's anon key in the `Authorization: Bearer <anon-key>` header to `https://oecogsvqzjliycaxekwx.supabase.co/functions/v1/make-server-94da7951/make-server-94da7951/health`; it should return `{"status":"ok"}`. Supabase Edge Function routing requires the function name both as the gateway function segment and as the route prefix inside the function. Vercel deploys only the Vite frontend, so deploy the Supabase function separately after changes to it. Configure required secrets in Supabase Edge Function settings; never add the service-role key to Vercel's client-side `VITE_*` variables.
 
 ### Google OAuth and Calendar
 
